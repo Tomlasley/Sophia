@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<!-- saved from url=(0060)file:///C:/Users/tomla/Downloads/sophias-sensorium-v3_3.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="en">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#f8f4ef">
 <title>Sophia's Sensorium</title>
-<link href="./Sophia&#39;s Sensorium_files/css2" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
 <style>
 :root{--void:#ffffff;--deep:#f0ece4;--panel:#e8e0d8;--rim:#666666;--teal:#005a50;--tg:rgba(0,122,110,.25);--ts:rgba(0,122,110,.10);--amber:#8a4e00;--as:rgba(176,106,0,.10);--red:#a02030;--rs:rgba(192,48,64,.10);--green:#1a5a38;--gs:rgba(42,122,80,.10);--text:#000000;--dim:#1a1a1a;--fd:'Cinzel',serif;--fb:'Lato',sans-serif}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -114,7 +114,7 @@ html,body{width:100%;height:100%;background:var(--void);color:var(--text);font-f
 <div class="main">
   <div class="inst-ban" id="instBan"><div class="inst-txt">Add to home screen for icon &amp; fullscreen</div><button class="inst-btn" id="instBtn">Install</button></div>
   <div class="camw">
-    <video id="vid" autoplay="" muted="" playsinline=""></video>
+    <video id="vid" autoplay muted playsinline></video>
     <div class="cam-ov"></div>
     <div class="cc tl"></div><div class="cc tr"></div><div class="cc bl"></div><div class="cc br"></div>
     <div class="cst" id="camSt">camera inactive</div>
@@ -124,12 +124,12 @@ html,body{width:100%;height:100%;background:var(--void);color:var(--text);font-f
   <div class="thumbs" id="thumbs"><div class="no-th" id="noTh">glimpses appear here</div></div>
   <div class="irow">
     <span class="irow-lbl">Auto-glimpse</span>
-    <button class="ichip" id="i2" onclick="setIv(&#39;2s&#39;)">2s</button>
-    <button class="ichip" id="i5" onclick="setIv(&#39;5s&#39;)">5s</button>
-    <button class="ichip" id="i10" onclick="setIv(&#39;10s&#39;)">10s</button>
-    <button class="ichip" id="i15" onclick="setIv(&#39;15s&#39;)">15s</button>
-    <button class="ichip sel" id="i30" onclick="setIv(&#39;30s&#39;)">30s</button>
-    <button class="ichip" id="iOff" onclick="setIv(&#39;off&#39;)">Off</button>
+    <button class="ichip" id="i2" onclick="setIv('2s')">2s</button>
+    <button class="ichip" id="i5" onclick="setIv('5s')">5s</button>
+    <button class="ichip" id="i10" onclick="setIv('10s')">10s</button>
+    <button class="ichip" id="i15" onclick="setIv('15s')">15s</button>
+    <button class="ichip sel" id="i30" onclick="setIv('30s')">30s</button>
+    <button class="ichip" id="iOff" onclick="setIv('off')">Off</button>
     <button class="csw" onclick="swapCam()">🔄 Cam</button>
   </div>
   <div class="vgrid">
@@ -160,19 +160,19 @@ html,body{width:100%;height:100%;background:var(--void);color:var(--text);font-f
 <div class="ctrl">
   <button class="btn btn-s" id="btnS" onclick="startSess()">▶ Start</button>
   <button class="btn btn-st" id="btnSt" onclick="stopSess()">⏹ Stop</button>
-  <button class="btn btn-eye" id="btnEye" onclick="manSnap()" disabled="">👁</button>
-  <button class="btn btn-exp" id="btnExp" onclick="exportSess()" disabled="">Export</button>
+  <button class="btn btn-eye" id="btnEye" onclick="manSnap()" disabled>👁</button>
+  <button class="btn btn-od" id="btnOd" onclick="connectOneDrive()" style="flex:.8;border-color:#0078d4;color:#0078d4;font-size:10px;">☁ OneDrive</button><button class="btn btn-exp" id="btnExp" onclick="exportSess()" disabled>Export</button>
 </div>
 <div class="cap-ov" id="capOv">
   <div class="cap-box">
     <div class="cap-ttl">👁 Glimpse Captured</div>
-    <img id="capImg" src="file:///C:/Users/tomla/Downloads/sophias-sensorium-v3_3.html" alt="">
-    <textarea class="cap-in" id="capIn" placeholder="Optional caption — where you are, what&#39;s happening..."></textarea>
+    <img id="capImg" src="" alt="">
+    <textarea class="cap-in" id="capIn" placeholder="Optional caption — where you are, what's happening..."></textarea>
     <div class="cap-btns"><button class="cap-sv" onclick="capSave()">Save Caption</button><button class="cap-sk" onclick="capSkip()">Skip</button></div>
   </div>
 </div>
 <script>
-const S={running:false,startTime:null,sessionId:null,tHandle:null,gHandle:null,aHandle:null,ivMs:30000,ivKey:'30s',autoIv:true,facing:'environment',glimpses:[],segments:[],pitchH:[],intensH:[],audioCtx:null,analyser:null,micSt:null,camSt:null,recog:null,pending:null};
+const S={running:false,startTime:null,sessionId:null,tHandle:null,gHandle:null,aHandle:null,ivMs:30000,ivKey:'30s',autoIv:true,facing:'environment',glimpses:[],segments:[],pitchH:[],intensH:[],audioCtx:null,analyser:null,micSt:null,camSt:null,recog:null,pending:null,odToken:null,odConnected:false};
 const IVS={'2s':2000,'5s':5000,'10s':10000,'15s':15000,'30s':30000,'off':0};
 let deferPWA=null;
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferPWA=e;document.getElementById('instBan').classList.add('show');});
@@ -215,15 +215,6 @@ function syncClapper(){
   const fl=document.getElementById('flash');
   fl.style.opacity='.9';
   setTimeout(()=>{fl.style.transition='opacity .3s';fl.style.opacity='0';setTimeout(()=>fl.style.transition='',300);},80);
-
-  if(S.audioCtx){
-    const osc=S.audioCtx.createOscillator();
-    const gain=S.audioCtx.createGain();
-    osc.connect(gain);gain.connect(S.audioCtx.destination);
-    osc.frequency.value=880;gain.gain.setValueAtTime(.4,S.audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(.001,S.audioCtx.currentTime+.18);
-    osc.start();osc.stop(S.audioCtx.currentTime+.18);
-  }
   // Capture sync glimpse with SYNC stamp
   const v=document.getElementById('vid');
   if(!v.srcObject||!v.videoWidth)return;
@@ -316,16 +307,20 @@ function capSave(){if(S.pending){S.pending.caption=document.getElementById('capI
 function capSkip(){if(S.pending){S.glimpses.push(S.pending);S.pending=null;}document.getElementById('capOv').classList.remove('show');}
 async function initAudio(){
   try{
-    const st=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
+    const st=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:false}});
     S.micSt=st;S.audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    // Create gain node at zero to prevent any audio feedback to speakers
     S.analyser=S.audioCtx.createAnalyser();S.analyser.fftSize=2048;S.analyser.smoothingTimeConstant=.82;
-    S.audioCtx.createMediaStreamSource(st).connect(S.analyser);
+    const src=S.audioCtx.createMediaStreamSource(st);
+    // Connect ONLY to analyser, never to destination — prevents speaker feedback
+    src.connect(S.analyser);
+    // Do NOT connect analyser to audioCtx.destination
   }catch(e){setSt('Mic unavailable — camera only','a');}
 }
 function initSpeech(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   if(!SR)return;
-  const r=new SR();r.continuous=true;r.interimResults=false;r.lang='en-US';
+  const r=new SR();r.continuous=true;r.interimResults=false;r.lang='en-US';r.maxAlternatives=1;
   r.onresult=e=>{for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal){const t=e.results[i][0].transcript.trim();if(t.length>2)addSeg(t);}}};
   r.onend=()=>{if(S.running){try{r.start()}catch(e){}}};
   try{r.start();S.recog=r;}catch(e){}
@@ -423,6 +418,18 @@ function tick(){if(!S.startTime)return;const el=Math.floor((Date.now()-S.startTi
 function setSt(msg,t){document.getElementById('stxt').textContent=msg;const d=document.getElementById('sdot');d.className='sdot'+(t==='g'?' g':t==='a'?' a':'');}
 function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
 function clearLog(){document.getElementById('tlog').innerHTML='';if(!S.running)document.getElementById('tlog').innerHTML='<div class="empty">Cleared</div>';}
+function localDownload(md,fname,jstr,jfname){
+  const blob=new Blob([md],{type:'text/markdown'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=fname;a.click();
+  URL.revokeObjectURL(url);
+  setTimeout(()=>{
+    const jblob=new Blob([jstr],{type:'application/json'});
+    const ju=URL.createObjectURL(jblob);
+    const ja=document.createElement('a');ja.href=ju;ja.download=jfname;ja.click();
+    URL.revokeObjectURL(ju);
+  },600);
+}
 function buildMd(dur){
   let md='# Sophia\'s Sensorium — Mobile Session\n**ID:** '+S.sessionId+'\n**Start:** '+new Date(S.startTime).toISOString()+'\n**Duration:** '+fmt(dur)+'\n**Glimpses:** '+S.glimpses.length+'  ·  **Segments:** '+S.segments.length+'\n\n---\n\n## Prosodic Transcript\n\n';
   S.segments.forEach((seg,i)=>{md+='### ['+fmt(seg.elapsed)+'] Segment '+(i+1)+'\n> '+seg.text+'\n\n- **Mood:** '+seg.prosody.mood+'\n- **Contour:** '+seg.prosody.con+'\n- **Pitch:** '+seg.prosody.pitch+'Hz\n- **Intensity:** '+seg.prosody.int+'%\n- **Brightness:** '+seg.prosody.bri+'\n- **Glimpse context:** #'+seg.gAt+'\n\n';});
@@ -433,25 +440,88 @@ function buildMd(dur){
 function exportSess(){
   if(!S.sessionId){alert('No session yet.');return;}
   const dur=S.startTime?Math.floor((Date.now()-S.startTime)/1000):0;
-  // Download markdown
   const md=buildMd(dur);
   const fname='Sensorium-'+S.sessionId+'.md';
-  const blob=new Blob([md],{type:'text/markdown'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');a.href=url;a.download=fname;a.click();
-  URL.revokeObjectURL(url);
-  // Download JSON with images after short delay
-  setTimeout(()=>{
-    const data={sessionId:S.sessionId,startTime:new Date(S.startTime).toISOString(),durationSeconds:dur,glimpses:S.glimpses,segments:S.segments};
-    const jblob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-    const ju=URL.createObjectURL(jblob);
-    const ja=document.createElement('a');ja.href=ju;ja.download='Sensorium-'+S.sessionId+'.json';ja.click();
-    URL.revokeObjectURL(ju);
-    // Show reminder
-    setTimeout(()=>alert('Files saved to Downloads.\nOpen OneDrive app → upload both files to:\nPrimary Sophia / Sensorium / sessions'),400);
-  },600);
+  const jfname='Sensorium-'+S.sessionId+'.json';
+  const data={sessionId:S.sessionId,startTime:new Date(S.startTime).toISOString(),durationSeconds:dur,glimpses:S.glimpses,segments:S.segments};
+  const jstr=JSON.stringify(data,null,2);
+  if(S.odConnected){
+    setSt('Uploading to OneDrive...','a');
+    Promise.all([
+      uploadToOneDrive(md, fname, 'text/markdown'),
+      uploadToOneDrive(jstr, jfname, 'application/json')
+    ]).then(([mdOk,jOk])=>{
+      if(mdOk&&jOk){
+        setSt('✓ Saved to Primary Sophia/Sensorium/sessions','g');
+        alert('Session saved to OneDrive:\nPrimary Sophia / Sensorium / sessions');
+      } else {
+        setSt('OneDrive upload failed — downloading locally','a');
+        localDownload(md,fname,jstr,jfname);
+      }
+    });
+  } else {
+    localDownload(md,fname,jstr,jfname);
+  }
+}
+
+// OneDrive Integration via MSAL implicit flow
+const OD_CLIENT_ID='e23b6aa3-be6b-47da-a5fe-a4a4c6e7a6e0'; // Microsoft personal apps client ID
+const OD_REDIRECT=window.location.href.split('?')[0].split('#')[0];
+const OD_SCOPE='Files.ReadWrite onedrive.readwrite';
+const OD_FOLDER='Primary Sophia/Sensorium/sessions';
+
+function connectOneDrive(){
+  if(S.odConnected){setSt('OneDrive connected ✓','g');return;}
+  // Check if we have token in hash from redirect
+  const hash=window.location.hash;
+  if(hash.includes('access_token')){
+    const params=new URLSearchParams(hash.substring(1));
+    S.odToken=params.get('access_token');
+    S.odConnected=true;
+    window.location.hash='';
+    document.getElementById('btnOd').textContent='☁ Connected';
+    document.getElementById('btnOd').style.borderColor='#2a7a50';
+    document.getElementById('btnOd').style.color='#2a7a50';
+    setSt('OneDrive connected — exports go to Sensorium/sessions','g');
+    return;
+  }
+  // Launch OAuth
+  const authUrl='https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize'+
+    '?client_id='+OD_CLIENT_ID+
+    '&response_type=token'+
+    '&redirect_uri='+encodeURIComponent(OD_REDIRECT)+
+    '&scope='+encodeURIComponent('Files.ReadWrite offline_access')+
+    '&response_mode=fragment';
+  window.location.href=authUrl;
+}
+
+// Check for token on page load
+window.addEventListener('load',()=>{
+  const hash=window.location.hash;
+  if(hash.includes('access_token')){
+    const params=new URLSearchParams(hash.substring(1));
+    S.odToken=params.get('access_token');
+    S.odConnected=true;
+    window.location.hash='';
+    document.getElementById('btnOd').textContent='☁ Connected';
+    document.getElementById('btnOd').style.borderColor='#2a7a50';
+    document.getElementById('btnOd').style.color='#2a7a50';
+  }
+});
+
+async function uploadToOneDrive(content, filename, mimeType){
+  if(!S.odToken) return false;
+  try{
+    // Ensure folder exists and upload file
+    const path=encodeURIComponent(OD_FOLDER+'/'+filename);
+    const res=await fetch('https://graph.microsoft.com/v1.0/me/drive/root:/'+path+':/content',{
+      method:'PUT',
+      headers:{'Authorization':'Bearer '+S.odToken,'Content-Type':mimeType},
+      body:content
+    });
+    return res.ok;
+  }catch(e){console.error('OD upload failed:',e);return false;}
 }
 </script>
-
-
-</body></html>
+</body>
+</html>
